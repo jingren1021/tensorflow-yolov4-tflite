@@ -32,7 +32,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.5f;
+    public static final float MINIMUM_CONFIDENCE_TF_OD_API = 0.3f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +40,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         cameraButton = findViewById(R.id.cameraButton);
-        detectButton = findViewById(R.id.detectButton);
-        imageView = findViewById(R.id.imageView);
+        //detectButton = findViewById(R.id.detectButton);
+       // imageView = findViewById(R.id.imageView);
 
         cameraButton.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, DetectorActivity.class)));
 
+        /*
         detectButton.setOnClickListener(v -> {
             Handler handler = new Handler();
 
@@ -59,13 +60,12 @@ public class MainActivity extends AppCompatActivity {
             }).start();
 
         });
+
         this.sourceBitmap = Utils.getBitmapFromAsset(MainActivity.this, "kite.jpg");
-
         this.cropBitmap = Utils.processBitmap(sourceBitmap, TF_OD_API_INPUT_SIZE);
-
         this.imageView.setImageBitmap(cropBitmap);
-
         initBox();
+        */
     }
 
     private static final Logger LOGGER = new Logger();
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final boolean TF_OD_API_IS_QUANTIZED = false;
 
-    private static final String TF_OD_API_MODEL_FILE = "yolov4-416-fp32.tflite";
+    private static final String TF_OD_API_MODEL_FILE = "yolov4-tiny-416.tflite";
 
     private static final String TF_OD_API_LABELS_FILE = "file:///android_asset/coco.txt";
 
@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
             final RectF location = result.getLocation();
             if (location != null && result.getConfidence() >= MINIMUM_CONFIDENCE_TF_OD_API) {
                 canvas.drawRect(location, paint);
+                //vibration
 //                cropToFrameTransform.mapRect(location);
 //
 //                result.setLocation(location);

@@ -178,7 +178,7 @@ public class YoloV4Classifier implements Classifier {
     private static boolean isGPU = true;
 
     // tiny or not
-    private static boolean isTiny = false;
+    private static boolean isTiny = true;
 
     // config yolov4 tiny
     private static final int[] OUTPUT_WIDTH_TINY = new int[]{2535, 2535};
@@ -206,8 +206,10 @@ public class YoloV4Classifier implements Classifier {
     //non maximum suppression
     protected ArrayList<Recognition> nms(ArrayList<Recognition> list) {
         ArrayList<Recognition> nmsList = new ArrayList<Recognition>();
-
-        for (int k = 0; k < labels.size(); k++) {
+        // select class to detect
+        //for (int k = 0; k < labels.size(); k++) {
+        // 0=person , 6=train
+        for (int k = 0; k <=6; k+=6) {
             //1.find max confidence per class
             PriorityQueue<Recognition> pq =
                     new PriorityQueue<Recognition>(
